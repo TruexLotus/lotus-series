@@ -5,7 +5,7 @@
 window.LS_CONFIG = {
 
   // ลิงก์ Web app ของ Apps Script (deployment "หน้าเว็บลูกค้า") ลงท้ายด้วย /exec
-  API_URL: 'PASTE_APPS_SCRIPT_EXEC_URL_HERE',
+  API_URL: 'https://script.google.com/macros/s/AKfycbxXAcRcIVQGnyNtQazqHamxudIiUBMdNBIz8YUVj8VG4aQFq__kTuhxdtQZj2lA2BC8/exec',
 
   // คลิปซีรีส์ 15-30 วินาที
   //   ไฟล์ mp4: วางไฟล์ชื่อ video.mp4 ไว้ในโฟลเดอร์เดียวกับไฟล์นี้ (แนะนำ ขนาดไม่เกิน 20 MB, แนวตั้ง 9:16)
