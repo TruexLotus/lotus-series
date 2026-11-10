@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>ดูซีรีส์ฟรี กับเน็ตทรู — เฉพาะที่โลตัส</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- 1) คลิป -->
+<section id="player" class="player">
+  <div class="stage" id="stage">
+    <video id="vid" playsinline webkit-playsinline muted autoplay preload="auto"></video>
+    <div id="yt" class="yt hide"></div>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="topline">
+    <span class="branch" id="branch"></span>
+    <button class="skip hide" id="skipBtn">ข้าม</button>
+  </div>
+  <button class="unmute" id="unmuteBtn" aria-label="เปิดเสียง">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M23 9l-6 6"></path><path d="M17 9l6 6"></path></svg>
+    <span>แตะเพื่อเปิดเสียง</span>
+  </button>
+  <button class="tapplay hide" id="tapPlay">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+    <span>แตะเพื่อดูคลิป</span>
+  </button>
+</section>
+
+<!-- 2) ป๊อปอัพหลังคลิปจบ -->
+<div class="pop hide" id="pop" role="dialog" aria-modal="true" aria-labelledby="offerTitle">
+  <div class="card">
+    <div class="kicker" id="offerKicker"></div>
+    <h1 id="offerTitle"></h1>
+    <p class="sub" id="offerSub"></p>
+    <ul id="offerBullets"></ul>
+    <div class="price"><b id="offerPrice"></b><span id="offerNote"></span></div>
+    <button class="cta" id="ctaBtn"></button>
+    <button class="ghost" id="replayBtn"></button>
+  </div>
+</div>
+
+<!-- 3) ฟอร์ม -->
+<section id="form" class="sheet hide">
+  <header class="fh">
+    <button class="back" id="backBtn" aria-label="กลับ">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
+    <div>
+      <div class="fk">สมัครเน็ตทรู ราคาพิเศษที่โลตัส</div>
+      <h2>ฝากข้อมูลไว้ เจ้าหน้าที่โทรกลับ</h2>
+    </div>
+  </header>
+  <form id="leadForm" novalidate>
+    <div class="f">
+      <label for="name">ชื่อ-นามสกุล</label>
+      <input id="name" name="name" autocomplete="name" required>
+    </div>
+    <div class="f">
+      <label for="phone">เบอร์โทร</label>
+      <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="12" placeholder="08x-xxx-xxxx" required>
+    </div>
+    <div class="f">
+      <label for="area">ที่จะติดตั้ง (เขต/อำเภอ, จังหวัด)</label>
+      <input id="area" name="area" placeholder="เช่น บางพลี, สมุทรปราการ">
+    </div>
+    <div class="f">
+      <span class="lb">แพ็กเกจที่สนใจ</span>
+      <div class="opts" id="pkgOpts"></div>
+    </div>
+    <div class="f">
+      <label for="calltime">สะดวกให้โทรช่วงไหน</label>
+      <select id="calltime" name="calltime"></select>
+    </div>
+    <div class="f">
+      <label for="note">ฝากข้อความ (ไม่บังคับ)</label>
+      <textarea id="note" name="note" rows="2" placeholder="เช่น อยากติดตั้งวันเสาร์"></textarea>
+    </div>
+    <input type="text" id="hp" name="hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label class="consent">
+      <input type="checkbox" id="consent">
+      <span>ยินยอมให้ทรูติดต่อกลับเพื่อเสนอบริการ และเก็บข้อมูลนี้ตามนโยบายความเป็นส่วนตัว<a id="privacyLink" class="hide" target="_blank" rel="noopener"> (อ่านนโยบาย)</a></span>
+    </label>
+    <div class="err hide" id="err"></div>
+    <button class="cta" id="sendBtn" type="submit">ส่งข้อมูล</button>
+  </form>
+</section>
+
+<!-- 4) ขอบคุณ -->
+<section id="done" class="sheet done hide">
+  <div class="tick">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+  </div>
+  <h2>ได้รับข้อมูลแล้ว</h2>
+  <p>เจ้าหน้าที่ทรูจะโทรกลับตามช่วงเวลาที่คุณสะดวก</p>
+  <p class="ref">หมายเลขอ้างอิง <b id="refId"></b></p>
+</section>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
