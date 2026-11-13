@@ -27,6 +27,10 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M23 9l-6 6"></path><path d="M17 9l6 6"></path></svg>
     <span>แตะเพื่อเปิดเสียง</span>
   </button>
+  <div class="midbar">
+    <button class="slowtip hide" id="slowTip"></button>
+    <button class="midcta hide" id="midCta">สมัครเลย</button>
+  </div>
   <button class="tapplay hide" id="tapPlay">
     <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
     <span>แตะเพื่อดูคลิป</span>
@@ -46,6 +50,22 @@
   </div>
 </div>
 
+<!-- 2b) ป๊อปอัพเน็ตช้า -->
+<div class="pop hide" id="slowPop" role="dialog" aria-modal="true" aria-labelledby="slowTitle">
+  <div class="card">
+    <button class="close" id="slowBack" aria-label="ปิด">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18"></path><path d="M6 6l12 12"></path></svg>
+    </button>
+    <div class="kicker" id="slowKicker"></div>
+    <h1 id="slowTitle"></h1>
+    <p class="sub" id="slowSub"></p>
+    <ul id="slowBullets"></ul>
+    <div class="price"><b id="slowPrice"></b><span id="slowNote"></span></div>
+    <button class="cta" id="switchBtn"></button>
+    <button class="textlink" id="issueBtn"></button>
+  </div>
+</div>
+
 <!-- 3) ฟอร์ม -->
 <section id="form" class="sheet hide">
   <header class="fh">
@@ -53,8 +73,8 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
     </button>
     <div>
-      <div class="fk">สมัครเน็ตทรู ราคาพิเศษที่โลตัส</div>
-      <h2>ฝากข้อมูลไว้ เจ้าหน้าที่โทรกลับ</h2>
+      <div class="fk" id="formKicker">สมัครเน็ตทรู ราคาพิเศษที่โลตัส</div>
+      <h2 id="formTitle">ฝากข้อมูลไว้ เจ้าหน้าที่โทรกลับ</h2>
     </div>
   </header>
   <form id="leadForm" novalidate>
@@ -67,19 +87,28 @@
       <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="12" placeholder="08x-xxx-xxxx" required>
     </div>
     <div class="f">
-      <label for="area">ที่จะติดตั้ง (เขต/อำเภอ, จังหวัด)</label>
+      <label for="area" id="areaLabel">ที่จะติดตั้ง (เขต/อำเภอ, จังหวัด)</label>
       <input id="area" name="area" placeholder="เช่น บางพลี, สมุทรปราการ">
     </div>
-    <div class="f">
-      <span class="lb">แพ็กเกจที่สนใจ</span>
+    <div class="f only-issue">
+      <span class="lb">บริการทรูที่เน็ตช้า</span>
+      <div class="opts" id="svcOpts"></div>
+    </div>
+    <div class="f only-lead">
+      <span class="lb">เลือกแอปดูซีรีส์ที่ชอบ</span>
+      <div class="pkgnote hide" id="pkgNote"></div>
       <div class="opts" id="pkgOpts"></div>
+    </div>
+    <div class="f only-lead">
+      <label for="provider">ตอนนี้ใช้เน็ตบ้านค่ายไหน (ไม่บังคับ)</label>
+      <select id="provider" name="provider"></select>
     </div>
     <div class="f">
       <label for="calltime">สะดวกให้โทรช่วงไหน</label>
       <select id="calltime" name="calltime"></select>
     </div>
     <div class="f">
-      <label for="note">ฝากข้อความ (ไม่บังคับ)</label>
+      <label for="note" id="noteLabel">ฝากข้อความ (ไม่บังคับ)</label>
       <textarea id="note" name="note" rows="2" placeholder="เช่น อยากติดตั้งวันเสาร์"></textarea>
     </div>
     <input type="text" id="hp" name="hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -98,7 +127,7 @@
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
   </div>
   <h2>ได้รับข้อมูลแล้ว</h2>
-  <p>เจ้าหน้าที่ทรูจะโทรกลับตามช่วงเวลาที่คุณสะดวก</p>
+  <p id="doneText">เจ้าหน้าที่ทรูจะโทรกลับตามช่วงเวลาที่คุณสะดวก</p>
   <p class="ref">หมายเลขอ้างอิง <b id="refId"></b></p>
 </section>
 
