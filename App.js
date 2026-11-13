@@ -1,7 +1,19 @@
 (function () {
   'use strict';
   var C = window.LS_CONFIG || {};
-  var $ = function (id) { return document.getElementById(id); };
+  // ถ้าหา element ไม่เจอ (เช่น index.html เป็นเวอร์ชันเก่า) ใช้ตัวหลอกแทน หน้าเว็บจะไม่ค้างจอดำ
+  var noop = function () {};
+  var STUB_CL = { add: noop, remove: noop, toggle: noop, contains: function () { return true; } };
+  function stub() {
+    return { classList: STUB_CL, style: {}, value: '', checked: false, files: null, focus: noop, play: noop, pause: noop,
+             scrollIntoView: noop, addEventListener: noop, querySelector: function () { return null; },
+             querySelectorAll: function () { return []; }, parentNode: { classList: STUB_CL } };
+  }
+  var $ = function (id) {
+    var el = document.getElementById(id);
+    if (!el) { try { console.warn('[lotus] ไม่พบ #' + id + ' — index.html อาจเป็นเวอร์ชันเก่า'); } catch (e) {} return stub(); }
+    return el;
+  };
   var params = new URLSearchParams(location.search);
   var SLUG = (params.get('b') || '').trim().toUpperCase();
   var T0 = Date.now();
