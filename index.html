@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -43,9 +43,45 @@
     <div class="kicker" id="offerKicker"></div>
     <h1 id="offerTitle"></h1>
     <p class="sub" id="offerSub"></p>
-    <ul id="offerBullets"></ul>
-    <div class="price"><b id="offerPrice"></b><span id="offerNote"></span></div>
-    <button class="cta" id="ctaBtn"></button>
+
+    <div class="choice">
+      <div class="ill" aria-hidden="true">
+        <svg viewBox="0 0 80 96" width="64" height="77">
+          <defs><linearGradient id="simg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0444C"/><stop offset="1" stop-color="#B81C24"/></linearGradient>
+          <linearGradient id="chipg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#D9A93A"/></linearGradient></defs>
+          <path d="M10 4h44l22 22v60a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V10a6 6 0 0 1 6-6z" fill="url(#simg)"/>
+          <rect x="20" y="40" width="40" height="32" rx="5" fill="url(#chipg)"/>
+          <path d="M20 51h40M20 61h40M34 40v32M46 40v32" stroke="#B8862A" stroke-width="1.6"/>
+        </svg>
+      </div>
+      <div class="txt">
+        <h3 id="simTitle"></h3>
+        <p id="simDesc"></p>
+        <a class="pill" id="simBtn" target="_blank" rel="noopener"><span></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="choice">
+      <div class="ill" aria-hidden="true">
+        <svg viewBox="0 0 96 80" width="76" height="63">
+          <path d="M34 22a20 20 0 0 1 28 0M39 28a12 12 0 0 1 18 0" stroke="#E3262F" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="48" cy="34" r="3.5" fill="#E3262F"/>
+          <rect x="10" y="44" width="56" height="20" rx="6" fill="#F3F4F6" stroke="#D5D8DD" stroke-width="2"/>
+          <path d="M18 44V22M58 44V22" stroke="#C9CCD2" stroke-width="4" stroke-linecap="round"/>
+          <rect x="52" y="54" width="36" height="18" rx="5" fill="#1F2228"/>
+          <circle cx="23" cy="54" r="2" fill="#0F9D58"/><circle cx="31" cy="54" r="2" fill="#0F9D58"/>
+        </svg>
+      </div>
+      <div class="txt">
+        <h3 id="netTitle"></h3>
+        <p id="netDesc"></p>
+        <button class="pill" id="ctaBtn"><span></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <p class="hint2" id="offerHint"></p>
     <button class="ghost" id="replayBtn"></button>
   </div>
 </div>
@@ -73,39 +109,67 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
     </button>
     <div>
-      <div class="fk" id="formKicker">สมัครเน็ตทรู ราคาพิเศษที่โลตัส</div>
-      <h2 id="formTitle">ฝากข้อมูลไว้ เจ้าหน้าที่โทรกลับ</h2>
+      <div class="fk" id="formKicker"></div>
+      <h2 id="formTitle"></h2>
+      <div class="fsub" id="formSub"></div>
     </div>
   </header>
   <form id="leadForm" novalidate>
-    <div class="f">
-      <label for="name">ชื่อ-นามสกุล</label>
-      <input id="name" name="name" autocomplete="name" required>
+
+    <!-- การ์ดแพ็กเกจ -->
+    <div class="pcard only-lead" id="pcard">
+      <span class="pbadge" id="pBadge"></span>
+      <div class="pprice"><b id="pPrice"></b><span id="pUnit"></span></div>
+      <div class="phead" id="pHead"></div>
+      <div class="pitems">
+        <div class="pi">
+          <svg viewBox="0 0 64 48" width="58" height="44" aria-hidden="true"><path d="M22 14a14 14 0 0 1 20 0M26 19a8 8 0 0 1 12 0" stroke="#E3262F" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="8" y="26" width="48" height="16" rx="5" fill="#F3F4F6" stroke="#C9CCD2" stroke-width="2"/><path d="M14 26V10M50 26V10" stroke="#C9CCD2" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="34" r="1.8" fill="#0F9D58"/><circle cx="26" cy="34" r="1.8" fill="#0F9D58"/></svg>
+          <span id="pI1"></span></div>
+        <b class="plus">+</b>
+        <div class="pi">
+          <svg viewBox="0 0 64 48" width="58" height="44" aria-hidden="true"><rect x="6" y="4" width="52" height="30" rx="3" fill="#2A1012"/><rect x="9" y="7" width="46" height="24" rx="2" fill="#B81C24"/><rect x="18" y="36" width="28" height="9" rx="3" fill="#F3F4F6" stroke="#C9CCD2" stroke-width="2"/></svg>
+          <span id="pI2"></span></div>
+        <b class="plus">+</b>
+        <div class="pi">
+          <svg viewBox="0 0 64 48" width="58" height="44" aria-hidden="true"><rect x="6" y="6" width="52" height="34" rx="4" fill="#E3262F"/><path d="M27 15v16l13-8z" fill="#fff"/></svg>
+          <span id="pI3"></span></div>
+      </div>
+      <div class="pspec"><div id="pSpec1"></div><div id="pSpec2"></div></div>
+      <div class="pfoot" id="pFoot"></div>
+    </div>
+
+    <div class="step only-lead"><b>1</b><div><h3>เลือกชุดแอปที่สนใจ</h3><p>เลือกได้ 1 ชุด รวมในแพ็กเกจข้างต้น</p></div></div>
+    <div class="apps only-lead" id="pkgOpts"></div>
+
+    <div class="step only-lead"><b>2</b><div><h3>ฝากข้อมูลให้ติดต่อกลับ</h3></div></div>
+
+    <div class="row2">
+      <div class="f">
+        <label for="name">ชื่อผู้ติดต่อ</label>
+        <input id="name" name="name" autocomplete="name" placeholder="ชื่อของคุณ" required>
+      </div>
+      <div class="f">
+        <label for="phone">เบอร์โทรศัพท์</label>
+        <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="12" placeholder="08X-XXX-XXXX" required>
+      </div>
     </div>
     <div class="f">
-      <label for="phone">เบอร์โทร</label>
-      <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="12" placeholder="08x-xxx-xxxx" required>
-    </div>
-    <div class="f">
-      <label for="area" id="areaLabel">ที่จะติดตั้ง (เขต/อำเภอ, จังหวัด)</label>
-      <input id="area" name="area" placeholder="เช่น บางพลี, สมุทรปราการ">
+      <label for="area" id="areaLabel">พื้นที่ติดตั้ง</label>
+      <input id="area" name="area" placeholder="เขต/อำเภอ และจังหวัด">
     </div>
     <div class="f only-issue">
       <span class="lb">บริการทรูที่เน็ตช้า</span>
       <div class="opts" id="svcOpts"></div>
     </div>
-    <div class="f only-lead">
-      <span class="lb">เลือกแอปดูซีรีส์ที่ชอบ</span>
-      <div class="pkgnote hide" id="pkgNote"></div>
-      <div class="opts" id="pkgOpts"></div>
-    </div>
-    <div class="f only-lead">
-      <label for="provider">ตอนนี้ใช้เน็ตบ้านค่ายไหน (ไม่บังคับ)</label>
-      <select id="provider" name="provider"></select>
-    </div>
-    <div class="f">
-      <label for="calltime">สะดวกให้โทรช่วงไหน</label>
-      <select id="calltime" name="calltime"></select>
+    <div class="row2">
+      <div class="f">
+        <label for="calltime">สะดวกให้โทร</label>
+        <select id="calltime" name="calltime"></select>
+      </div>
+      <div class="f only-lead">
+        <label for="provider">เน็ตบ้านที่ใช้อยู่</label>
+        <select id="provider" name="provider"></select>
+      </div>
     </div>
     <div class="f">
       <label for="note" id="noteLabel">ฝากข้อความ (ไม่บังคับ)</label>
@@ -117,7 +181,8 @@
       <span>ยินยอมให้ทรูติดต่อกลับเพื่อเสนอบริการ และเก็บข้อมูลนี้ตามนโยบายความเป็นส่วนตัว<a id="privacyLink" class="hide" target="_blank" rel="noopener"> (อ่านนโยบาย)</a></span>
     </label>
     <div class="err hide" id="err"></div>
-    <button class="cta" id="sendBtn" type="submit">ส่งข้อมูล</button>
+    <button class="cta" id="sendBtn" type="submit">ให้เจ้าหน้าที่ติดต่อกลับ</button>
+    <p class="after" id="afterNote"></p>
   </form>
 </section>
 
@@ -131,7 +196,7 @@
   <p class="ref">หมายเลขอ้างอิง <b id="refId"></b></p>
 </section>
 
-<script src="config.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="config.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
