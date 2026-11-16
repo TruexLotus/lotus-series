@@ -103,3 +103,55 @@ input:not([type=radio]):not([type=checkbox]):focus,select:focus,textarea:focus{b
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+
+/* ---------- ป๊อปอัพ 2 ตัวเลือก ---------- */
+#pop .card{max-height:calc(100vh - 32px);overflow-y:auto}
+.choice{display:flex;gap:12px;align-items:center;border:1.5px solid #F4B8C5;border-radius:16px;padding:12px 12px 12px 8px;margin-top:10px;background:#fff}
+.choice .ill{flex:0 0 84px;display:flex;align-items:center;justify-content:center;align-self:stretch;border-right:1px solid #EEF0F3;padding-right:6px}
+.choice .txt{flex:1;min-width:0}
+.choice h3{margin:0;font-size:18px;line-height:1.3;color:var(--red);font-weight:800}
+.choice p{margin:4px 0 10px;font-size:14px;color:var(--text2);line-height:1.45}
+.pill{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:46px;border:0;border-radius:12px;
+  background:var(--red);color:#fff;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(227,38,47,.3)}
+.hint2{text-align:center;color:var(--muted);font-size:13.5px;margin:12px 0 0}
+.hint2:empty{display:none}
+#pop .ghost{border-top:1px solid #EEF0F3;margin-top:10px;border-radius:0}
+
+/* ---------- หน้าแพ็กเกจ ---------- */
+.fh{flex-wrap:nowrap}
+.fsub{font-size:13.5px;opacity:.92;margin-top:2px}
+.fsub:empty{display:none}
+.pcard{background:#fff;border:1.5px solid #F2A9AE;border-radius:18px;padding:16px 14px 12px;text-align:center}
+.pbadge{display:inline-block;background:#FDE3E5;color:var(--redd);font-weight:700;font-size:14px;border-radius:999px;padding:3px 14px}
+.pprice{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:2px}
+.pprice b{font-size:64px;line-height:1.05;font-weight:800;color:var(--red);letter-spacing:-1px}
+.pprice span{font-size:20px;font-weight:700}
+.phead{font-size:17px;font-weight:700;margin-top:2px}
+.pitems{display:flex;align-items:flex-start;justify-content:center;gap:4px;margin:12px 0 10px}
+.pi{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.pi span{background:#FDE3E5;color:#5A1014;font-size:12.5px;font-weight:600;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.plus{color:var(--red);font-size:24px;line-height:44px}
+.pspec{background:#F4F5F7;border-radius:12px;padding:8px 10px;font-size:14px;font-weight:600;line-height:1.55}
+.pfoot{font-size:12px;color:var(--muted);margin-top:6px}
+.pfoot:empty{display:none}
+.step{display:flex;gap:10px;align-items:flex-start;margin-top:6px}
+.step>b{flex:0 0 32px;height:32px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px}
+.step h3{margin:0;font-size:19px;line-height:1.35}
+.step p{margin:0;font-size:13.5px;color:var(--muted)}
+.apps{display:flex;flex-direction:column;gap:8px}
+.app{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #D9DCE1;border-radius:14px;padding:10px 12px;min-height:62px;cursor:pointer}
+.app.on{border-color:var(--red);background:#FFF5F5;box-shadow:0 0 0 1px var(--red) inset}
+.app .logos{flex:0 0 46%;display:flex;align-items:center;gap:6px;min-width:0}
+.app .logos .sep{width:1px;height:26px;background:#D9DCE1;flex:0 0 1px}
+.app .logos img{height:30px;max-width:46%;object-fit:contain}
+.app .badge{display:inline-flex;align-items:center;height:30px;padding:0 10px;border-radius:8px;background:#F4F5F7;border:1px solid #E3E5E9;
+  font-size:13px;font-weight:800;color:#2B2F36;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:48%}
+.app .name{flex:1;font-size:14.5px;font-weight:600;line-height:1.35;min-width:0}
+.app.plain .name{font-weight:700}
+.app input{width:24px;height:24px;padding:0;margin:0;accent-color:var(--red);flex:0 0 24px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2 .f{min-width:0}
+.after{text-align:center;color:var(--muted);font-size:13px;margin:0}
+.after:empty{display:none}
+.form-issue .pcard,.form-issue .step,.form-issue .apps{display:none}
+@media (max-width:340px){.row2{grid-template-columns:1fr}.pprice b{font-size:52px}}
