@@ -53,15 +53,24 @@
 
   /* ---------------- ข้อความ ---------------- */
   var O = C.OFFER || {};
+  var SIM = O.sim || {}, NET = O.net || {};
   $('offerKicker').textContent = O.kicker || '';
-  $('offerTitle').textContent = O.title || '';
+  $('offerTitle').textContent = O.title || 'สนใจดูซีรีส์ต่อ?';
   $('offerSub').textContent = O.subtitle || '';
-  $('offerBullets').innerHTML = (O.bullets || []).map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('');
-  $('offerPrice').textContent = O.price || '';
-  $('offerNote').textContent = O.price_note || '';
-  $('ctaBtn').textContent = O.cta || 'สมัครเลย';
+  $('simTitle').textContent = SIM.title || '';
+  $('simDesc').textContent = SIM.desc || '';
+  setBtnText('simBtn', SIM.btn || 'ดูรายละเอียดซิม');
+  if (SIM.url) $('simBtn').href = SIM.url;
+  $('netTitle').textContent = NET.title || 'สมัครเน็ตทรู ราคาพิเศษ';
+  $('netDesc').textContent = NET.desc || '';
+  setBtnText('ctaBtn', NET.btn || 'ดูแพ็กเกจเน็ตทรู');
+  $('offerHint').textContent = O.hint || '';
   $('replayBtn').textContent = O.replay || 'ดูคลิปอีกครั้ง';
-  $('midCta').textContent = O.cta || 'สมัครเลย';
+  $('midCta').textContent = NET.btn || 'สมัครเลย';
+  function setBtnText(id, t) {
+    var el = $(id), sp = el.querySelector ? el.querySelector('span') : null;
+    if (sp) sp.textContent = t; else el.textContent = t;
+  }
 
   var S = C.SLOW_OFFER || {};
   $('slowKicker').textContent = S.kicker || O.kicker || '';
@@ -123,6 +132,7 @@
     $('slowPop').classList.remove('hide');
   }
   $('ctaBtn').onclick = function () { track('popup_click'); openForm('lead'); };
+  $('simBtn').onclick = function () { track('sim_click'); };   // เปิดลิงก์ซิมในแท็บใหม่ (หน้านี้ยังอยู่)
   $('midCta').onclick = function () { track('mid_cta'); openForm('lead'); };
   $('slowTip').onclick = function () { showSlowPopup(false); };
   $('switchBtn').onclick = function () { track('popup_click', 'switch'); openForm('lead', true); };
@@ -229,8 +239,48 @@
       });
     });
   }
-  radios('pkgOpts', 'pkg', C.PACKAGES || []);
-  if (C.PACKAGE_NOTE) { $('pkgNote').textContent = C.PACKAGE_NOTE; $('pkgNote').classList.remove('hide'); }
+  /* การ์ดแพ็กเกจ */
+  var PC = C.PACKAGE_CARD || {};
+  [['pBadge', 'badge'], ['pPrice', 'price'], ['pUnit', 'unit'], ['pHead', 'headline'], ['pSpec1', 'spec1'],
+   ['pSpec2', 'spec2'], ['pFoot', 'foot'], ['afterNote', 'after']].forEach(function (x) { $(x[0]).textContent = PC[x[1]] || ''; });
+  (PC.items || []).forEach(function (t, i) { $('pI' + (i + 1)).textContent = t; });
+  if (!PC.price) $('pcard').classList.add('hide');
+
+  /* ตัวเลือกชุดแอป (มีโลโก้) */
+  var LOGOS = C.APP_LOGOS || {};
+  function logoHtml(app) {
+    var src = LOGOS[app];
+    var badge = '<span class="badge">' + esc(app) + '</span>';
+    if (!src) return badge;
+    return '<img class="lg" src="' + esc(src) + '" alt="' + esc(app) + '" data-app="' + esc(app) + '">';
+  }
+  var PK = (C.PACKAGES || []).map(function (p) {
+    return typeof p === 'string' ? { value: p, label: p, apps: [] } : p;
+  });
+  $('pkgOpts').innerHTML = PK.map(function (p, i) {
+    var apps = p.apps || [];
+    var logos = apps.length ? '<span class="logos">' + apps.map(logoHtml).join('<i class="sep"></i>') + '</span>' : '';
+    return '<label class="app' + (apps.length ? '' : ' plain') + '">' + logos +
+      '<span class="name">' + esc(p.label || p.value) + '</span>' +
+      '<input type="radio" name="pkg" value="' + esc(p.value) + '"></label>';
+  }).join('');
+  // โหลดรูปโลโก้ไม่ได้ (ยังไม่ได้อัปไฟล์) = กลับไปใช้ป้ายชื่อแอป
+  Array.prototype.forEach.call($('pkgOpts').querySelectorAll('img.lg'), function (img) {
+    function fallback() {
+      var b = document.createElement('span');
+      b.className = 'badge';
+      b.textContent = img.getAttribute('data-app');
+      if (img.parentNode) img.parentNode.replaceChild(b, img);
+    }
+    if (img.complete && !img.naturalWidth) fallback(); else img.addEventListener('error', fallback);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=pkg]'), function (r) {
+    r.addEventListener('change', function () {
+      Array.prototype.forEach.call($('pkgOpts').querySelectorAll('.app'), function (o) {
+        o.classList.toggle('on', o.querySelector('input').checked);
+      });
+    });
+  });
   radios('svcOpts', 'svc', C.ISSUE_SERVICES || ['เน็ตมือถือทรู', 'เน็ตบ้านทรูออนไลน์']);
   $('provider').innerHTML = '<option value="">— ไม่ระบุ —</option>' + (C.PROVIDERS || []).map(function (t) {
     return '<option>' + esc(t) + '</option>';
@@ -251,17 +301,19 @@
     if (mode === 'issue') {
       $('formKicker').textContent = 'สำหรับลูกค้าทรู';
       $('formTitle').textContent = 'แจ้งปัญหาเน็ตช้า เจ้าหน้าที่โทรกลับ';
+      $('formSub').textContent = '';
       $('areaLabel').textContent = 'พื้นที่ที่เน็ตช้า (เขต/อำเภอ, จังหวัด)';
       $('noteLabel').textContent = 'อาการที่เจอ (ไม่บังคับ)';
       $('note').placeholder = 'เช่น เน็ตบ้านหลุดบ่อยช่วงค่ำ';
       $('sendBtn').textContent = 'ส่งเรื่อง';
     } else {
-      $('formKicker').textContent = 'สมัครเน็ตทรู ราคาพิเศษที่โลตัส';
-      $('formTitle').textContent = 'ฝากข้อมูลไว้ เจ้าหน้าที่โทรกลับ';
-      $('areaLabel').textContent = 'ที่จะติดตั้ง (เขต/อำเภอ, จังหวัด)';
+      $('formKicker').textContent = PC.header_kicker || 'สิทธิพิเศษที่โลตัส';
+      $('formTitle').textContent = PC.header_title || 'เน็ตบ้าน พร้อมแอปดูซีรีส์';
+      $('formSub').textContent = PC.header_sub || '';
+      $('areaLabel').textContent = 'พื้นที่ติดตั้ง';
       $('noteLabel').textContent = 'ฝากข้อความ (ไม่บังคับ)';
       $('note').placeholder = 'เช่น อยากติดตั้งวันเสาร์';
-      $('sendBtn').textContent = 'ส่งข้อมูล';
+      $('sendBtn').textContent = 'ให้เจ้าหน้าที่ติดต่อกลับ';
       if (switching && $('provider').value === '') $('provider').focus();
     }
     $('pop').classList.add('hide');
@@ -269,7 +321,8 @@
     $('err').classList.add('hide');
     f.classList.remove('hide');
     f.scrollTop = 0;
-    setTimeout(function () { $('name').focus(); }, 250);
+    // หน้าแพ็กเกจ: ให้ลูกค้าเห็นการ์ดแพ็กเกจก่อน ไม่กระโดดลงไปที่ช่องชื่อ
+    if (mode === 'issue') setTimeout(function () { $('name').focus(); }, 250);
   }
   $('backBtn').onclick = function () {
     $('form').classList.add('hide');
@@ -292,6 +345,10 @@
     var phone = $('phone').value.replace(/[^0-9]/g, '');
     if (name.length < 2) return showErr('กรุณากรอกชื่อ');
     if (!/^0[0-9]{8,9}$/.test(phone)) return showErr('กรุณากรอกเบอร์โทรให้ถูกต้อง');
+    if (MODE !== 'issue' && PK.length && !picked('pkg')) {
+      $('pkgOpts').scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return showErr('กรุณาเลือกชุดแอปที่สนใจ (ข้อ 1)');
+    }
     if (!$('consent').checked) return showErr('กรุณากดยินยอมให้ติดต่อกลับ');
     if (!API_OK) return showErr('ระบบยังไม่ได้ตั้งค่า กรุณาแจ้งเจ้าหน้าที่');
     var issue = MODE === 'issue';
