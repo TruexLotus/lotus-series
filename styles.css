@@ -110,7 +110,7 @@ input:not([type=radio]):not([type=checkbox]):focus,select:focus,textarea:focus{b
 .choice .ill{flex:0 0 84px;display:flex;align-items:center;justify-content:center;align-self:stretch;border-right:1px solid #EEF0F3;padding-right:6px}
 .choice .txt{flex:1;min-width:0}
 .choice h3{margin:0;font-size:18px;line-height:1.3;color:var(--red);font-weight:800}
-.choice p{margin:4px 0 10px;font-size:14px;color:var(--text2);line-height:1.45}
+.choice p{margin:4px 0 10px;font-size:14px;color:var(--text2);line-height:1.45;white-space:pre-line}
 .pill{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:46px;border:0;border-radius:12px;
   background:var(--red);color:#fff;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(227,38,47,.3)}
 .hint2{text-align:center;color:var(--muted);font-size:13.5px;margin:12px 0 0}
